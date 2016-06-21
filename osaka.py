@@ -3,42 +3,20 @@
 
 from __future__ import division
 
-# from selector import select
+from selector import select
 from trader import trader
-import pandas as pd
-import easyquotation 
-
-def stockFilter(stock):
-        head = stock[:1]
-        return head == "0" or head == "3" or head == "6"
+import time
 
 class smallCapStock:
     def __init__(self, target_num=10):
         ''' 当日全部股票 '''
-        quotation = easyquotation.use('qq')
-        self.stocks_info = quotation.all
-        self.target_num = target_num
+        print("yoyo")
         # self.trader = trader()
-
-    def min_volume_stocks(self):
-
-        df = pd.DataFrame(self.stocks_info).T
-        to_drop = list(df.columns)
-        to_drop.remove("now")
-        to_drop.remove("涨跌(%)")
-        to_drop.remove("总市值")
-        to_drop.remove("name")
-        to_drop.remove("unknown")
-        df = df.drop(pd.Index(to_drop),1)
-        stocks = filter(stockFilter,list(df.index))
-        df = df[df.index.isin(stocks) == True] 
-        df.columns = ["name","price","unknown","total_value","changepercent"]
-        print(df)
-        # return d f, sort_stocks[self.target_num]
 
     def adjust(self):
         # 10支最小市值股票 
-        target_stocks_info, target_add_stock = self.min_volume_stocks()
+        target_stocks_info = select()
+        print(target_stocks_info)
         # 目标股票
         # target_stocks = target_stocks_info.keys()
         # 持仓股票
@@ -88,4 +66,6 @@ class smallCapStock:
 
 if __name__ == '__main__':
     scs = smallCapStock()
-    scs.adjust()
+    while True:
+        scs.adjust()
+        time.sleep(5) 
