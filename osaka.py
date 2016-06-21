@@ -10,9 +10,11 @@ import time
 class smallCapStock:
     def __init__(self, target_num=10):
         ''' 当日全部股票 '''
-        print("yoyo")
-        # self.trader = trader()
-
+        self.trader = trader()
+        holding_stocks = self.trader.holding.keys()
+        self.sell_out([i for i in holding_stocks if i not in target_stocks])
+        self.sell_out([i for i in holding_stocks if i not in target_stocks], first=False)
+    
     def adjust(self):
         # 10支最小市值股票 
         target_stocks_info = select()
@@ -20,15 +22,12 @@ class smallCapStock:
         # 目标股票
         # target_stocks = target_stocks_info.keys()
         # 持仓股票
-        # holding_stocks = self.trader.holding.keys()
 
         # # 清仓 
-        # self.sell_out([i for i in holding_stocks if i not in target_stocks])
         # # 开仓
         # self.buy_in([i for i in target_stocks if i not in holding_stocks])
 
         # # 再次清仓, 针对雪球1% 无法清仓的情况调整
-        # self.sell_out([i for i in holding_stocks if i not in target_stocks], first=False)
 
         # # 剩余余额买target_num+1标的
         # self.buy_in([target_add_stock.get('code')], first=False)
